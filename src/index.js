@@ -47,15 +47,6 @@ const renderSelectOptions = (select, id = 1) => {
     }   
 };
 
-const getItemById = (item, id) => {
-    let name;
-    fetch(`${url}/${item}/?id=${id}`)
-    .then(res => res.json())
-    .then(json => {
-        name = json.name;
-    });
-    return name;
-}
 
 const renderUsers = () => {
     fetch(`${url}/users`)
