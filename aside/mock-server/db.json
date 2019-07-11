@@ -310,42 +310,6 @@
       "state_id": "13",
       "city_id": "13",
       "createdAt": 1543783746465
-    },
-    {
-      "name": "Alexey Koval",
-      "email": "koval@ukr.net",
-      "country_id": "1",
-      "state_id": "10",
-      "city_id": "10",
-      "phone_number": "380951451235",
-      "address": "Golosiivskiy ave, 32",
-      "about_me": null,
-      "createdAt": 1562838142499,
-      "id": "Gsb781o"
-    },
-    {
-      "name": "Alexey Koval",
-      "email": "koval@ukr.net",
-      "country_id": "1",
-      "state_id": "8",
-      "city_id": "8",
-      "phone_number": "897987987",
-      "address": null,
-      "about_me": null,
-      "createdAt": 1562838252122,
-      "id": "kSQevd9"
-    },
-    {
-      "name": "sdfdf",
-      "email": "dff@gfg.com",
-      "country_id": "1",
-      "state_id": "9",
-      "city_id": "9",
-      "phone_number": "324234",
-      "address": null,
-      "about_me": null,
-      "createdAt": 1562838361615,
-      "id": "R3MXF83"
     }
   ]
 }
