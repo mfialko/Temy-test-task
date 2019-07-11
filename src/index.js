@@ -101,6 +101,8 @@ stateSelect.onchange = event => {
 document.addEventListener("DOMContentLoaded", () => {
     renderUsers();
     renderSelectOptions('countries');
+    clearForm(); //from firefox remembering values after page reload
+        
 });
 
 regButton.addEventListener('click', (e) => {
@@ -108,20 +110,25 @@ regButton.addEventListener('click', (e) => {
     regButton.classList.toggle('d-none');
     list.classList.toggle('d-none');
     listTitle.classList.toggle('d-none');
-})
+});
+
 
 const clearForm = () => {
     let items = regForm.elements;
     for (let i in items) {
         if (items[i].type === 'select-one' || items[i].type === 'text' 
-            || items[i].type === 'textarea' || items[i].type === 'number'
-            || items[i].type === 'email') {
+            || items[i].type === 'textarea' || items[i].type === 'email') {
             items[i].value = "";
         }
     }
 }
+  
+submitButton.addEventListener('click', (e) => {
+    regForm.classList.add('check-form');
+});
 
 regForm.addEventListener('submit', (e) => {
+    
     let regUser = {
         "name": regForm.elements.name.value,
         "email": regForm.elements.email.value,
@@ -152,6 +159,7 @@ regForm.addEventListener('submit', (e) => {
         regButton.classList.toggle('d-none');
         list.classList.toggle('d-none');
         listTitle.classList.toggle('d-none');
+        regForm.classList.remove('check-form');
     })
     .catch(error => console.error(error));
     e.preventDefault();
