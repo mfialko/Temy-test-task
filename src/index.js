@@ -1,6 +1,8 @@
-let submitButton = document.querySelector('.button');
-let filterForm = document.querySelector('form');
-let list = document.querySelector('.list');
+let submitButton = document.querySelector('.btn');
+let regButton = document.querySelector('.reg-button');
+let regForm = document.querySelector('form');
+let list = document.querySelector('.list-group');
+let listTitle = document.querySelector('.list-title')
 let countrySelect = document.querySelector('.country-select');
 let stateSelect = document.querySelector('.state-select');
 let citySelect = document.querySelector('.city-select');
@@ -71,16 +73,19 @@ const renderUsers = () => {
             let num = item['phone_number'];
             let email = item.email;
             return Promise.all([country, state, city]).then(e => {
-                return `<li>Name:${name}</li>
-                        <li>Email: ${email}</li>
-                        <li>Phone number: ${num}</li>
-                        <li>Location: ${country}, ${state}, ${city}</li>
-                        <li>Registered: ${date.toLocaleString().split(',')[0]}</li>
-                        `;
+                return `<div class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>${name}</h5>
+                            </div>
+                            <p class="mb-1">Email: ${email}</p>
+                            <p class="mb-1">Phone number: ${num}</p>
+                            <p class="mb-1">Location: ${country}, ${state}, ${city}</p>
+                            <small>Registered: ${date.toLocaleString().split(',')[0]}</small>
+                        </div>`;
             });
         });
         Promise.all(userList).then(e => {
-            list.innerHTML = e.join();  
+            list.innerHTML = e.reverse().join();  
         });
     })            
 };
@@ -98,16 +103,33 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSelectOptions('countries');
 });
 
-filterForm.addEventListener('submit', (e) => {
+regButton.addEventListener('click', (e) => {
+    regForm.classList.toggle('d-none');
+    regButton.classList.toggle('d-none');
+    list.classList.toggle('d-none');
+    listTitle.classList.toggle('d-none');
+})
+
+const clearForm = () => {
+    let items = regForm.elements;
+    for (let i in items) {
+        if (items[i].type === 'select-one' || items[i].type === 'text' 
+            || items[i].type === 'textarea' || items[i].type === 'number') {
+            items[i].value = "";
+        }
+    }
+}
+
+regForm.addEventListener('submit', (e) => {
     let regUser = {
-        "name": filterForm.elements.name.value,
-        "email": filterForm.elements.email.value,
-        "country_id": filterForm.elements.country.value,
-        "state_id": filterForm.elements.state.value,
-        "city_id": filterForm.elements.city.value,
-        "phone_number": filterForm.elements.phoneNum.value,
-        "address": filterForm.elements.address.value,
-        "about_me": filterForm.elements.about.value
+        "name": regForm.elements.name.value,
+        "email": regForm.elements.email.value,
+        "country_id": regForm.elements.country.value,
+        "state_id": regForm.elements.state.value,
+        "city_id": regForm.elements.city.value,
+        "phone_number": regForm.elements.phoneNum.value,
+        "address": regForm.elements.address.value,
+        "about_me": regForm.elements.about.value
     };
     for (let i in regUser) {
         if (regUser[i] === '') {
@@ -122,11 +144,15 @@ filterForm.addEventListener('submit', (e) => {
         },
         body: JSON.stringify(regUser),
       })
-      .then(res => res.json())
-      .then(json => {
-        document.location.reload();
-      })
-      .catch(error => console.error(error));
+    .then(res => {
+        clearForm();
+        renderUsers();
+        regForm.classList.toggle('d-none');
+        regButton.classList.toggle('d-none');
+        list.classList.toggle('d-none');
+        listTitle.classList.toggle('d-none');
+    })
+    .catch(error => console.error(error));
     e.preventDefault();
 });
 
