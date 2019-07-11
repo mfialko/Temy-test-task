@@ -114,7 +114,8 @@ const clearForm = () => {
     let items = regForm.elements;
     for (let i in items) {
         if (items[i].type === 'select-one' || items[i].type === 'text' 
-            || items[i].type === 'textarea' || items[i].type === 'number') {
+            || items[i].type === 'textarea' || items[i].type === 'number'
+            || items[i].type === 'email') {
             items[i].value = "";
         }
     }
